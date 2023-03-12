@@ -5,6 +5,7 @@ from vizualization import viz_info
 # INITIAL SETUP
 root = Tk()
 root.geometry("520x500+550+300")
+root.title("Food Tracker")
 welcome_menu = Frame(root)
 add_menu = Frame(root)
 pick_menu = Frame(root)
@@ -40,7 +41,7 @@ def welcome_menu_func():
 
     welcome_menu.pack(fill="both", expand=1)
     welcome_label = Label(welcome_menu,
-                          text="Welcome to the nutrition calculator",
+                          text="Welcome to the Food Tracker",
                           font=("Comic sans MS", 20, "bold"),
                           fg="#9ab973"
                           )
