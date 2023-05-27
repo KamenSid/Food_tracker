@@ -39,10 +39,10 @@ class Food:
         self.carbs = result[5]
 
     def add_food(self):
-        self.cursor.execute("INSERT INTO fast_foods VALUES ({}, '{}', {}, {}, {}, {})".
+        self.cursor.execute("INSERT INTO daily_intake VALUES ({}, '{}', {}, {}, {}, {})".
                             format(self.id_number, self.name, self.cal, self.protein, self.fat, self.carbs))
         self.connection.commit()
-        # self.connection.close()
+
 
 
 
