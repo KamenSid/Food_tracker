@@ -3,9 +3,9 @@ from database import *
 from API_comunication import *
 import time
 
+
 class AddMenu:
     def __init__(self, root, pick_menu, welcome_menu):
-
         self.frame = root
         self.buttons = self.button_creation()
         self.labels = self.label_creation()
@@ -62,6 +62,7 @@ class AddMenu:
         return labels
 
         # ENTRY CREATION
+
     def entries_creation(self):
         entries = {}
         id_entry = Entry(self.frame,
@@ -75,7 +76,7 @@ class AddMenu:
         calories_entry = Entry(self.frame,
                                font=("Comic sans MS", 15, "bold"),
                                )
-        entries["calories"]= calories_entry
+        entries["calories"] = calories_entry
         protein_entry = Entry(self.frame,
                               font=("Comic sans MS", 15, "bold"),
                               )
@@ -95,17 +96,6 @@ class AddMenu:
                        format(args[0], args[1], args[2], args[3], args[4], args[5]))
         connection.commit()
 
-    # for food in fast_foods:
-    #     button = Button(pick_menu,
-    #                     text=f"{food[1]}",
-    #                     font=("Comic sans MS", 20, "bold"),
-    #                     bg="#6e8b3d",
-    #                     activebackground="#51803e",
-    #                     command=lambda x=food: initial_button_load(x),
-    #                     height=1,
-    #                     width=3,
-    #                     )
-    #     self.buttons.append(button)
     @staticmethod
     def show_fast_food_func():
         cursor.execute("SELECT * FROM fast_foods")
@@ -113,29 +103,28 @@ class AddMenu:
         print(fast_food_list)
 
     def add_food_func(self):
-
         id_number = time.time()
         name = self.entries["name"].get()
-        calories = int(self.entries["calories"].get())
-        protein = int(self.entries["protein"].get())
-        fat = int(self.entries["fat"].get())
-        carbs = int(self.entries["carbs"].get())
+        calories = float(self.entries["calories"].get())
+        protein = float(self.entries["protein"].get())
+        fat = float(self.entries["fat"].get())
+        carbs = float(self.entries["carbs"].get())
         print(f"{name} added")
-        button_info = (id_number, name, calories, protein, fat, carbs)
+        # button_info = (id_number, name, calories, protein, fat, carbs)
         new_food = Food(id_number, name, calories, protein, fat, carbs)
         new_food.add_food()
 
-        button = Button(self.pick_menu,
-                        text=f"{name}",
-                        font=("Comic sans MS", 20, "bold"),
-                        bg="#6e8b3d",
-                        activebackground="#51803e",
-                        command=lambda x=button_info: self.initial_button_load(x),
-                        height=1,
-                        width=3,
-                        )
-
-        self.pick_menu.buttons.append(button)
+        # button = Button(self.pick_menu,
+        #                 text=f"{name}",
+        #                 font=("Comic sans MS", 20, "bold"),
+        #                 bg="#6e8b3d",
+        #                 activebackground="#51803e",
+        #                 command=lambda x=button_info: self.initial_button_load(x),
+        #                 height=1,
+        #                 width=3,
+        #                 )
+        #
+        # self.pick_menu.buttons.append(button)
         self.entries["id"].delete(0, END)
         self.entries["name"].delete(0, END)
         self.entries["calories"].delete(0, END)
@@ -147,13 +136,19 @@ class AddMenu:
         food = self.entries["name"].get()
         food_data = get_food_values(food)
 
-        id_number = time.time()
-        new_food = Food(id_number, food, food_data["calories"],
-                        food_data["protein_g"], food_data["fat_total_g"], food_data["carbohydrates_total_g"])
-        new_food.add_food()
+        self.entries["calories"].delete(0, END)
+        self.entries["calories"].insert(0, food_data["calories"])
+
+        self.entries["protein"].delete(0, END)
+        self.entries["protein"].insert(0, food_data["protein_g"])
+
+        self.entries["fat"].delete(0, END)
+        self.entries["fat"].insert(0, food_data["fat_total_g"])
+
+        self.entries["carbs"].delete(0, END)
+        self.entries["carbs"].insert(0, food_data["carbohydrates_total_g"])
 
     def back_to_menu_func(self):
-
         main_menu = self.welcome_menu()
         main_menu.welcome_menu_func()
 
@@ -161,14 +156,14 @@ class AddMenu:
         buttons = {}
 
         get_food_values_from_API = Button(self.frame,
-                          text="Get values",
-                          font=("Comic sans MS", 20, "bold"),
-                          bg="#6e8b3d",
-                          activebackground="#51803e",
-                          command=self.get_food_vals,
-                          height=1,
-                          width=10
-                          )
+                                          text="Get values",
+                                          font=("Comic sans MS", 20, "bold"),
+                                          bg="#6e8b3d",
+                                          activebackground="#51803e",
+                                          command=self.get_food_vals,
+                                          height=1,
+                                          width=10
+                                          )
         buttons["get_food_val"] = get_food_values_from_API
         add_food = Button(self.frame,
                           text="Add food",
@@ -204,7 +199,6 @@ class AddMenu:
         return buttons
 
     def placement(self):
-
         # WELLCOME LABEL
 
         # ID
@@ -231,6 +225,3 @@ class AddMenu:
         self.buttons["add_food"].place(x=300, y=150)
         self.buttons["show_fast_food"].place(x=300, y=250)
         self.buttons["back_to_menu"].place(x=300, y=350)
-
-
-
