@@ -1,3 +1,4 @@
+import datetime
 from tkinter import *
 from database import *
 from API_comunication import *
@@ -18,9 +19,9 @@ class AddMenu:
     def label_creation(self):
         labels = {}
         search_question = Label(self.frame,
-                                text=f"Input the name of the food to search automatically.",
-                                font=("Comic sans MS", 30, "bold"),
-                                fg="#9ab973"
+                                text=f"Input the name of the food\nto search automatically",
+                                font=("Comic sans MS", 15, "bold"),
+                                fg="#3ab675"
                                 )
         labels["search"] = search_question
         id_label = Label(self.frame,
@@ -103,7 +104,7 @@ class AddMenu:
         print(fast_food_list)
 
     def add_food_func(self):
-        id_number = time.time()
+
         name = self.entries["name"].get()
         calories = float(self.entries["calories"].get())
         protein = float(self.entries["protein"].get())
@@ -111,7 +112,7 @@ class AddMenu:
         carbs = float(self.entries["carbs"].get())
         print(f"{name} added")
         # button_info = (id_number, name, calories, protein, fat, carbs)
-        new_food = Food(id_number, name, calories, protein, fat, carbs)
+        new_food = Food(name, calories, protein, fat, carbs)
         new_food.add_food()
 
         # button = Button(self.pick_menu,
@@ -201,9 +202,7 @@ class AddMenu:
     def placement(self):
         # WELLCOME LABEL
 
-        # ID
-        # id_label.place(x=30, y=130)
-        # id_entry.place(x=30, y=150)
+        self.labels["search"].place(x=5, y=10)
         # NAME
         self.labels["name"].place(x=30, y=180)
         self.entries["name"].place(x=30, y=200)
